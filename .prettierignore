@@ -1,0 +1,12 @@
+node_modules
+coverage
+dist
+build
+.git
+.github
+.vscode
+*.log
+package-lock.json
+yarn.lock
+uploads/*
+!uploads/.gitkeep 
