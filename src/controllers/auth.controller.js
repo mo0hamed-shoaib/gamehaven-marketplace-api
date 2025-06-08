@@ -62,3 +62,65 @@ const register = async (req, res) => {
         });
     }
 };
+
+// @desc    Login user
+// @route   POST /api/auth/login
+// @access  Public
+const login = async (req, res) => {
+    try {
+        // Validate request body using express-validator
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { email, password } = req.body;
+
+        // Find user by email
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({
+                status: 'error',
+                message: 'Invalid credentials',
+            });
+        }
+
+        // Verify password using the comparePassword method from user model
+        const isMatch = await user.comparePassword(password);
+        if (!isMatch) {
+            return res.status(401).json({
+                status: 'error',
+                message: 'Invalid credentials',
+            });
+        }
+
+        // Generate JWT token for authenticated user
+        const token = generateToken(user._id);
+
+        // Return success response with user data and token
+        res.json({
+            status: 'success',
+            data: {
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                },
+                token,
+            },
+        });
+    } catch (error) {
+        // Handle any unexpected errors
+        res.status(500).json({
+            status: 'error',
+            message: error.message,
+        });
+    }
+};
+
+// Export the controller functions
+module.exports = {
+    register,
+    login,
+};
