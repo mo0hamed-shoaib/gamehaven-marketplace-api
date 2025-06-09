@@ -1,12 +1,12 @@
 const express = require('express');
 const { body } = require('express-validator');
-const {protect, admin} = require('../middleware/auth.middleware');
-//TODO: implement order controller
+const { protect, admin } = require('../middleware/auth.middleware');
+//TODO: implement order controller(model first)
 const {
-    getOrders,
-    getOrder,
-    createOrder,
-    updateOrderStatus
+  getOrders,
+  getOrder,
+  createOrder,
+  updateOrderStatus,
 } = require('../controllers/order.controller');
 const router = express.Router();
 
