@@ -31,6 +31,6 @@ const dummygameSchema = new mongoose.Schema({
 },
 });
 
-const Game = mongoose.model('TempGame', dummygameSchema);
+const dummyGame = mongoose.model('TempGame', dummygameSchema);
 
-module.exports = Game;
+module.exports = dummyGame;
