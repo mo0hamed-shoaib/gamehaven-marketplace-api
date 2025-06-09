@@ -20,7 +20,7 @@ const register = async (req, res) => {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { name, email, password } = req.body;
+        const { name, email, password, role } = req.body;
 
         // Check if user with provided email already exists
         const userExists = await User.findOne({ email });
@@ -36,6 +36,7 @@ const register = async (req, res) => {
             name,
             email,
             password,
+            role: role || 'user', // Use provided role or default to 'user'
         });
 
         // Generate JWT token for the new user
