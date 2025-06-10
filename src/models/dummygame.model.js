@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const dummygameSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    trim: true
 },
   description: {
     type: String,
@@ -11,15 +12,18 @@ const dummygameSchema = new mongoose.Schema({
 },
   price: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
 },
   platform: {
     type: String,
-    required: true
+    required: true,
+    enum: ['PC', 'PlayStation', 'Xbox', 'Nintendo Switch']
 },
   genre: {
     type: String,
-    required: true
+    required: true,
+    enum: ['Action', 'Adventure', 'RPG', 'Strategy', 'Sports', 'Racing', 'Puzzle']
 },
   coverImage: {
     type: String,
@@ -27,10 +31,18 @@ const dummygameSchema = new mongoose.Schema({
 },
   stock: {
     type: Number,
-    required: true
+    required: true,
+    min: 0,
+    default: 0
 },
+rating: {
+    type: Number,
+    min: 0,
+    max: 5,
+    default: 0
+}
 });
 
-const dummyGame = mongoose.model('TempGame', dummygameSchema);
+const dummyGame = mongoose.model('dummyGame', dummygameSchema);
 
 module.exports = dummyGame;
