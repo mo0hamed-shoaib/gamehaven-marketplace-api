@@ -8,5 +8,23 @@ const orderSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
+    items: [
+        {
+            game: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Game',
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true,
+                min: 1
+            },
+            price: {
+                type: Number,
+                required: true
+            }
+        }
+    ]
 });
 module.exports = Order;
