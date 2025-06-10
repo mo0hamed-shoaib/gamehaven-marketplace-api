@@ -38,4 +38,29 @@ class CartService {
     await cart.save();
     return cart.populate('items.game');
   }
+
+  // Update cart item quantity
+  static async updateCartItem(userId, itemId, quantity) {
+    const cart = await Cart.findOne({ user: userId });
+    if (!cart) {
+      const error = new Error('Cart not found');
+      error.status = 404;
+      throw error;
+    }
+    const item = cart.items.id(itemId);
+    if (!item) {
+      const error = new Error('Item not found in cart');
+      error.status = 404;
+      throw error;
+    }
+    const game = await Game.findById(item.game);
+    if (game.stock < quantity) {
+      throw new Error('Insufficient stock');
+    }
+    item.quantity = quantity;
+    await cart.save();
+    return cart.populate('items.game');
+  }
 }
+
+module.exports = CartService;
