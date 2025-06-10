@@ -33,6 +33,21 @@ const getOrder = async (req, res) => {
   }
 }
 
+const createOrder = async (req, res) => {
+  try {
+    const order = await OrderService.createOrder(req.user._id);
+    res.status(201).json({
+      status:  'success',
+      data: {order}
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+};
+
 module.exports = {
   getOrders,
   getOrder,
