@@ -48,6 +48,28 @@ const createOrder = async (req, res) => {
   }
 };
 
+const updateOrderStatus = async(req, res) => {
+  try {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      return res.status(400).json({errors: errors.array()});
+    }
+
+    const {status} = req.body;
+    const order = await OrderService.updateOrderStatus(req.params.id, status);
+    
+    res.json({
+      status:'success',
+      data: {order}
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+};
+
 module.exports = {
   getOrders,
   getOrder,
