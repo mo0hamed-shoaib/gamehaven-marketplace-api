@@ -18,6 +18,21 @@ const getOrders = async (req, res) => {
   }
 };
 
+const getOrder = async (req, res) => {
+  try {
+    const order = await OrderService.getOrder(req.user._id, req.params.id);
+    res.json({
+      status: 'success',
+      data: {order}
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+}
+
 module.exports = {
   getOrders,
   getOrder,
