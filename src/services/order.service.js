@@ -1,6 +1,6 @@
 const Order = require('../models/order.model');
 const dummyCart = require('../models/dummyCart.model');
-const dummyGame = require('../models/dummyModel.model');
+const dummyGame = require('../models/dummyGame.model');
 
 class OrderService{
     //get user orders
@@ -22,6 +22,49 @@ class OrderService{
         }
 
         return order;
+    }
+
+    static async createOrder(userId){
+        const cart = await Cart.findOne({user: userId}).populate('items.game');
+        if(!cart || cart.items.length === 0){
+            throw new Error('cart is empty');
+        }
+
+        let total = 0;
+        const orderItems = [];
+
+        for (let item of cart.items){
+            const game = await dummyGame.findById(item.game._id);
+            if(!game){
+                throw new Error(`game ${item.game._id} not found`)
+            }
+
+            if(game.stock < item.quantity){
+                throw new Error(`not enough stock for ${game.title}`)
+            }
+
+            game.stock -= item.quantity;
+            await game.save();
+
+            orderItems.push({
+                game: game._id,
+                quantity: item.quantity,
+                price: game.price
+            });
+
+            total += game.price * item.quantity;
+        }
+
+        const order = await Order.create({
+            user: userId,
+            items: orderItems,
+            total
+        });
+
+        cart.items = [];
+        await Cart.save();
+        
+        return order.populate('items.game');
     }
 }
 

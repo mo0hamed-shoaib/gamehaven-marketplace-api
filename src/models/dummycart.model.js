@@ -36,7 +36,7 @@ const dummyCartSchema = new mongoose.Schema({
 dummyCartSchema.pre('save', async function(next){
     try {
         let total = 0;
-        for (let item in this.items){
+        for (let item of this.items){
             const game = await mongoose.model('dummyGame').findById(item.game);
             if(game){
                 total += game.price * item.quantity;
