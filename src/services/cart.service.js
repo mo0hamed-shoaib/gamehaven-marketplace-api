@@ -61,6 +61,18 @@ class CartService {
     await cart.save();
     return cart.populate('items.game');
   }
+  // Remove item from cart
+  static async removeFromCart(userId, itemId) {
+    const cart = await Cart.findOne({ user: userId });
+    if (!cart) {
+      const error = new Error('Cart not found');
+      error.status = 404;
+      throw error;
+    }
+    cart.items = cart.items.filter(item => item._id.toString() !== itemId);
+    await cart.save();
+    return cart.populate('items.game');
+  }
 }
 
 module.exports = CartService;
