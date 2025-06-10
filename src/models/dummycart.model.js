@@ -31,5 +31,23 @@ const dummyCartSchema = new mongoose.Schema({
         default: 0
     }
 });
+
+//before saving, calculate total
+dummyCartSchema.pre('save', async function(next){
+    try {
+        let total = 0;
+        for (let item in this.items){
+            const game = await mongoose.model('dummyGame').findById(item.game);
+            if(game){
+                total += game.price * item.quantity;
+            }
+        }
+        this.total = total;
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
 const dummyCart = mongoose.model('dummyCart', dummyCartSchema);
 module.exports = dummyCart;
