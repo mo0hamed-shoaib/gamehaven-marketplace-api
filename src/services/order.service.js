@@ -25,7 +25,7 @@ class OrderService{
     }
 
     static async createOrder(userId){
-        const cart = await Cart.findOne({user: userId}).populate('items.game');
+        const cart = await dummyCart.findOne({user: userId}).populate('items.game');
         if(!cart || cart.items.length === 0){
             throw new Error('cart is empty');
         }
@@ -64,6 +64,19 @@ class OrderService{
         cart.items = [];
         await Cart.save();
         
+        return order.populate('items.game');
+    }
+
+    static async updateOrderStatus(orderId, status){
+        const order = await Order.findById(orderId);
+
+        if(!order){
+            throw new Error('order not found');
+        }
+
+        order.status = status;
+        await order.save();
+
         return order.populate('items.game');
     }
 }
