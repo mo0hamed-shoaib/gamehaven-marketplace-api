@@ -41,7 +41,28 @@ const addToCart = async (req, res, next) => {
   }
 };
 
+// @desc    Update cart item
+// @route   PUT /api/cart/:itemId
+// @access  Private
+const updateCartItem = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { quantity } = req.body;
+    const cart = await CartService.updateCartItem(req.user._id, req.params.itemId, quantity);
+    res.json({
+      status: 'success',
+      data: { cart },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getCart,
   addToCart,
+  updateCartItem,
 };
