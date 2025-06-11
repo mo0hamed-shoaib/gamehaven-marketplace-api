@@ -73,6 +73,18 @@ class CartService {
     await cart.save();
     return cart.populate('items.game');
   }
+  // Clear cart
+  static async clearCart(userId) {
+    const cart = await Cart.findOne({ user: userId });
+    if (!cart) {
+      const error = new Error('Cart not found');
+      error.status = 404;
+      throw error;
+    }
+    cart.items = [];
+    await cart.save();
+    return cart;
+  }
 }
 
 module.exports = CartService;
