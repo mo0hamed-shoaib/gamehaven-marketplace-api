@@ -19,6 +19,29 @@ const getCart = async (req, res) => {
   }
 };
 
+// @desc    Add item to cart
+// @route   POST /api/cart
+// @access  Private
+const addToCart = async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { gameId, quantity } = req.body;
+    const cart = await CartService.addToCart(req.user._id, gameId, quantity);
+
+    res.json({
+      status: 'success',
+      data: { cart },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getCart,
+  addToCart,
 };
