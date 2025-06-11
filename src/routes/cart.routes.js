@@ -20,5 +20,5 @@ router.use(protect);
 
 router.get('/', getCart);
 router.post('/', cartItemValidation, addToCart);
-
+router.put('/:itemId', cartItemValidation, updateCartItem);
 module.exports = router;
