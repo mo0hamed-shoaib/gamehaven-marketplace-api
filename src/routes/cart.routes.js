@@ -14,3 +14,10 @@ const cartItemValidation = [
   body('gameId').isMongoId().withMessage('Invalid game ID'),
   body('quantity').isInt({ min: 1 }).withMessage('Quantity must be at least 1'),
 ];
+
+// All routes are protected
+router.use(protect);
+
+router.get('/', getCart);
+
+module.exports = router;
