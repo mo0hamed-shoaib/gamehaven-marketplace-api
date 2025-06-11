@@ -61,8 +61,23 @@ const updateCartItem = async (req, res) => {
   }
 };
 
+// @access  Private
+const removeFromCart = async (req, res) => {
+  try {
+    const cart = await CartService.removeFromCart(req.user._id, req.params.itemId);
+
+    res.json({
+      status: 'success',
+      data: { cart },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getCart,
   addToCart,
   updateCartItem,
+  removeFromCart,
 };
