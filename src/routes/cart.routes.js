@@ -19,5 +19,6 @@ const cartItemValidation = [
 router.use(protect);
 
 router.get('/', getCart);
+router.post('/', cartItemValidation, addToCart);
 
 module.exports = router;
