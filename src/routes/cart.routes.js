@@ -1,4 +1,6 @@
 const express = require('express');
+const { body } = require('express-validator');
+const { protect } = require('../middleware/auth.middleware');
 const {
   getCart,
   addToCart,
@@ -22,4 +24,5 @@ router.get('/', getCart);
 router.post('/', cartItemValidation, addToCart);
 router.put('/:itemId', cartItemValidation, updateCartItem);
 router.delete('/:itemId', removeFromCart);
+router.delete('/', clearCart);
 module.exports = router;
