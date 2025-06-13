@@ -10,7 +10,7 @@ const orderSchema = new mongoose.Schema(
       {
         game: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'dummyGame',
+          ref: 'Game',
           required: true,
         },
         quantity: {
