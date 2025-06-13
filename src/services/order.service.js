@@ -1,6 +1,6 @@
 const Order = require('../models/order.model');
-const dummyCart = require('../models/dummyCart.model');
-const dummyGame = require('../models/dummyGame.model');
+const Cart = require('../models/cart.model');
+const Game = require('../models/game.model');
 
 class OrderService{
     //get user orders
@@ -25,7 +25,7 @@ class OrderService{
     }
 
     static async createOrder(userId){
-        const cart = await dummyCart.findOne({user: userId}).populate('items.game');
+        const cart = await Cart.findOne({user: userId}).populate('items.game');
         if(!cart || cart.items.length === 0){
             throw new Error('cart is empty');
         }
@@ -34,7 +34,7 @@ class OrderService{
         const orderItems = [];
 
         for (let item of cart.items){
-            const game = await dummyGame.findById(item.game._id);
+            const game = await Game.findById(item.game._id);
             if(!game){
                 throw new Error(`game ${item.game._id} not found`)
             }
