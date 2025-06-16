@@ -1,7 +1,13 @@
 const express = require('express');
 const { body } = require('express-validator');
 const { protect, admin } = require('../middleware/auth.middleware');
-const { createGame, updateGame, deleteGame } = require('../controllers/game.controller');
+const {
+  getGames,
+  getGame,
+  createGame,
+  updateGame,
+  deleteGame,
+} = require('../controllers/game.controller');
 const upload = require('../middleware/upload.middleware');
 
 const router = express.Router();
@@ -19,6 +25,10 @@ const gameValidation = [
     .withMessage('invalid genre'),
   body('stock').isInt({ min: 0 }).withMessage('stock must be positive'),
 ];
+
+// Public routes
+router.get('/', getGames);
+router.get('/:id', getGame);
 
 //admin routes
 router.post('/', protect, admin, upload.single('coverImage'), gameValidation, createGame);
