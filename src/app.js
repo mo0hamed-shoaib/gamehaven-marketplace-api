@@ -27,16 +27,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(requestLogger);
 
-// Swagger Documentation
-app.use('/docs', swaggerUi.serve);
-app.get('/docs', swaggerUi.setup(swaggerSpecs, {
-  explorer: true,
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: "GameHaven API Documentation"
-}));
+// Serve static files
+app.use(express.static(path.join(__dirname, '../public')));
 
-// Static files
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+// Serve Swagger JSON
+app.get('/api-docs.json', (req, res) => {
+  res.json(swaggerSpecs);
+});
 
 // API Routes
 app.use('/api/auth', authRoutes);
