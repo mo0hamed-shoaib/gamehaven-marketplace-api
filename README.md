@@ -4,6 +4,13 @@
 
 _A comprehensive digital video game marketplace REST API built with modern technologies, designed for scalability and ease of use._
 
+<!-- Live Demo Badge -->
+  <div style="margin: 30px 0;">
+    <a href="https://gamehaven-marketplace-api.vercel.app/" target="_blank">
+      <img src="https://img.shields.io/badge/🚀_LIVE_SWAGGER_DEMO-Click_Here-FF6B6B?style=for-the-badge&labelColor=4ECDC4&color=FF6B6B" alt="Live Swagger Demo" style="height: 40px;" />
+    </a>
+  </div>
+
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-4.18+-blue.svg)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-green.svg)](https://www.mongodb.com/)
@@ -220,10 +227,18 @@ gamehaven-marketplace-api/
 
 ## 📚 API Documentation
 
+### Swagger UI
+
+The API documentation is available through Swagger UI at:
+
+- Development: `http://localhost:3000/docs`
+- Production: `https://gamehaven-marketplace-api.vercel.app/docs`
+
 ### Base URL
 
 ```
-http://localhost:3000/api/v1
+Development: http://localhost:3000/api
+Production: https://gamehaven-marketplace-api.vercel.app/api
 ```
 
 ### Authentication Endpoints
@@ -257,15 +272,6 @@ http://localhost:3000/api/v1
 | DELETE | `/cart/remove/:gameId` | Remove item from cart | Yes           |
 | DELETE | `/cart/clear`          | Clear entire cart     | Yes           |
 
-### Order Endpoints
-
-| Method | Endpoint             | Description                 | Auth Required |
-| ------ | -------------------- | --------------------------- | ------------- |
-| GET    | `/orders`            | Get user orders             | Yes           |
-| GET    | `/orders/:id`        | Get single order            | Yes           |
-| POST   | `/orders`            | Create new order            | Yes           |
-| PUT    | `/orders/:id/status` | Update order status (Admin) | Yes           |
-
 ### Request/Response Examples
 
 #### User Registration
@@ -285,7 +291,7 @@ Content-Type: application/json
 
 ```json
 {
-  "success": true,
+  "status": "success",
   "message": "User registered successfully",
   "data": {
     "user": {
@@ -296,6 +302,130 @@ Content-Type: application/json
     },
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
   }
+}
+```
+
+#### Create Game (Admin)
+
+```http
+POST /api/games
+Content-Type: multipart/form-data
+Authorization: Bearer YOUR_JWT_TOKEN
+
+{
+  "title": "The Legend of Zelda: Breath of the Wild",
+  "description": "An action-adventure game set in a vast open world",
+  "price": 59.99,
+  "platform": "Nintendo Switch",
+  "genre": "Adventure",
+  "stock": 50,
+  "coverImage": (binary)
+}
+```
+
+**Response:**
+
+```json
+{
+  "status": "success",
+  "data": {
+    "game": {
+      "id": "64a7b8c9d1e2f3g4h5i6j7k8",
+      "title": "The Legend of Zelda: Breath of the Wild",
+      "description": "An action-adventure game set in a vast open world",
+      "price": 59.99,
+      "platform": "Nintendo Switch",
+      "genre": "Adventure",
+      "stock": 50,
+      "coverImage": "https://example.com/images/zelda.jpg"
+    }
+  }
+}
+```
+
+## 🚀 Deployment
+
+### Vercel Deployment
+
+The API is deployed on Vercel. The deployment process is automated through GitHub integration:
+
+1. Push changes to the main branch
+2. Vercel automatically builds and deploys
+3. Environment variables are configured in Vercel dashboard
+
+### Environment Variables for Production
+
+```env
+NODE_ENV=production
+MONGODB_URI=your_production_mongodb_uri
+JWT_SECRET=your_production_jwt_secret
+JWT_EXPIRES_IN=7d
+```
+
+### Project Structure
+
+```
+gamehaven-marketplace-api/
+├── 📁 src/
+│   ├── 📁 config/
+│   │   ├── database.js          # Database connection
+│   │   └── swagger.js           # Swagger documentation config
+│   ├── 📁 controllers/
+│   │   ├── auth.controller.js   # Authentication logic
+│   │   ├── cart.controller.js   # Cart management
+│   │   └── game.controller.js   # Game operations
+│   ├── 📁 middleware/
+│   │   ├── auth.middleware.js   # Authentication middleware
+│   │   ├── error.middleware.js  # Error handling
+│   │   └── upload.middleware.js # File upload handling
+│   ├── 📁 models/
+│   │   ├── user.model.js        # User schema
+│   │   ├── game.model.js        # Game schema
+│   │   └── cart.model.js        # Cart schema
+│   ├── 📁 routes/
+│   │   ├── auth.routes.js       # Authentication routes
+│   │   ├── game.routes.js       # Game routes
+│   │   └── cart.routes.js       # Cart routes
+│   ├── 📁 public/              # Static files
+│   │   └── index.html          # Swagger UI
+│   └── app.js                  # Application entry point
+├── 📁 uploads/                 # File upload directory
+├── .env.example               # Environment template
+├── .gitignore                # Git ignore rules
+├── package.json              # Dependencies and scripts
+├── vercel.json              # Vercel configuration
+└── README.md                # This file
+```
+
+### Vercel Configuration
+
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/app.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/docs",
+      "dest": "/public/index.html"
+    },
+    {
+      "src": "/api-docs.json",
+      "dest": "/src/app.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/src/app.js"
+    }
+  ]
 }
 ```
 
@@ -342,20 +472,7 @@ EXPOSE 3000
 CMD ["npm", "start"]
 ```
 
-### Environment Setup for Production
-
-```env
-NODE_ENV=production
-PORT=3000
-MONGODB_URI=mongodb://your-production-db-url
-JWT_SECRET=your-super-secure-production-secret
-```
-
-<div align="center">
-
 ## 👥 Team Roles
-
-</div>
 
 | Team Member            | Role                     | Responsibilities                                           |
 | ---------------------- | ------------------------ | ---------------------------------------------------------- |
@@ -364,11 +481,7 @@ JWT_SECRET=your-super-secure-production-secret
 | **Mohamed Rafat**      | 🎮 **Game Catalog Lead** | View Games Catalog, Single Game View                       |
 | **Rahaf Hazem**        | 💼 **Orders & Admin**    | Place Order, Admin Game Management                         |
 
-<div align="center">
-
 ## 🔄 Development Workflow
-
-</div>
 
 ### Individual Team Member Workflow
 
