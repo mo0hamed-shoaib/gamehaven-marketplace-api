@@ -22,6 +22,7 @@ const options = {
                 description: 'Production server'
             }
         ],
+        basePath: '/api',
         components: {
             securitySchemes: {
                 bearerAuth: {

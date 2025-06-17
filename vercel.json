@@ -4,10 +4,6 @@
     {
       "src": "src/app.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "docs/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -16,8 +12,12 @@
       "dest": "src/app.js"
     },
     {
+      "src": "/api-docs/(.*)",
+      "dest": "src/app.js"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/docs/$1"
+      "dest": "src/app.js"
     }
   ]
 } 
