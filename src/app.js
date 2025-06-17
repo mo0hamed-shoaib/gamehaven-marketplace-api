@@ -28,8 +28,12 @@ app.use(morgan('dev'));
 app.use(requestLogger);
 
 // Swagger Documentation
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+app.use('/', swaggerUi.serve);
+app.get('/', swaggerUi.setup(swaggerSpecs, {
+  explorer: true,
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: "GameHaven API Documentation"
+}));
 
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
