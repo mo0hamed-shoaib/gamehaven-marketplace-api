@@ -1,94 +1,250 @@
 <div align="center">
+<img src="https://capsule-render.vercel.app/api?type=venom&height=200&color=gradient&text=GameHaven&reversal=false&section=header&textBg=false&animation=twinkling&fontSize=80&fontColor=ffffff" />
 
 # 🎮 GameHaven Marketplace API
 
-_A comprehensive digital video game marketplace REST API built with modern technologies, designed for scalability and ease of use._
+<p align="center">
+  <em>A comprehensive digital video game marketplace REST API built with modern technologies, designed for scalability and ease of use.</em>
+</p>
 
-<!-- Live Demo Badge -->
-  <div style="margin: 30px 0;">
-    <a href="https://gamehaven-marketplace-api.vercel.app/" target="_blank">
-      <img src="https://img.shields.io/badge/🚀_LIVE_SWAGGER_DEMO-Click_Here-FF6B6B?style=for-the-badge&labelColor=4ECDC4&color=FF6B6B" alt="Live Swagger Demo" style="height: 40px;" />
-    </a>
-  </div>
+<div align="center" style="margin: 40px 0;">
+  <a href="https://gamehaven-marketplace-api.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀_LIVE_SWAGGER_DEMO-Click_Here-FF6B6B?style=for-the-badge&labelColor=4ECDC4&color=FF6B6B&logoWidth=40" alt="Live Swagger Demo" style="height: 50px;" />
+  </a>
+</div>
 
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
-[![Express](https://img.shields.io/badge/Express-4.18+-blue.svg)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-green.svg)](https://www.mongodb.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Express-4.18+-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
+  <img src="https://img.shields.io/badge/MongoDB-6.0+-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/JWT-Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License" />
+  <img src="https://img.shields.io/badge/API-REST-blue?style=for-the-badge" alt="REST API" />
+  <img src="https://img.shields.io/badge/Deployed-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+</p>
 
 </div>
 
-## 📖 Table of Contents
+---
 
-- [Features](#-features)
-- [Tech Stack](#️-tech-stack)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Configuration](#-configuration)
-- [Usage](#-usage)
-- [Project Structure](#️-project-structure)
-- [API Documentation](#-api-documentation)
-- [Security](#-security-features)
-- [Testing](#-testing)
-- [Deployment](#-deployment)
-- [Team](#-team-roles)
-- [Contributing](#-contributing)
-- [License](#-license)
+## 📚 Table of Contents
 
-## 🚀 Features
+<details>
+<summary>Click to expand navigation</summary>
 
-### Core Functionality
+- [✨ Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📋 Prerequisites](#-prerequisites)
+- [🚀 Quick Start](#-quick-start)
+- [⚙️ Configuration](#️-configuration)
+- [🎯 Usage](#-usage)
+- [🏗️ Project Structure](#️-project-structure)
+- [📖 API Documentation](#-api-documentation)
+- [🔐 Security](#-security-features)
+- [👥 Team](#-team-roles)
+- [🤝 Contributing](#-contributing)
+- [📞 Support & Community](#-support--community)
+- [📄 License](#-license)
+- [🙏 Acknowledgments](#-acknowledgments)
 
-- **User Management**: Complete user registration, authentication, and profile management
-- **Game Catalog**: Browse, search, and filter games with detailed information
-- **Shopping Cart**: Add, remove, and manage items in shopping cart
-- **Order Processing**: Complete order lifecycle from cart to completion
-- **Reviews & Ratings**: User feedback system for games
-- **Admin Panel**: Administrative controls for game and user management
+</details>
 
-### Technical Features
+---
 
-- **RESTful API Design**: Clean, consistent API endpoints
-- **JWT Authentication**: Secure token-based authentication
-- **File Upload Support**: Image uploads for game covers with validation
-- **Input Validation**: Comprehensive request validation
-- **Error Handling**: Global error handling with meaningful responses
-- **Request Logging**: Detailed request logging for monitoring
-- **Role-Based Access**: User and Admin role separation
+## ✨ Features
+
+<div align="center">
+
+### 🎯 Core Functionality
+
+<table>
+<tr>
+<td width="50%">
+
+**🔐 User Management**
+- Complete user registration & authentication
+- Secure profile management
+- JWT-based sessions
+
+**🎮 Game Catalog**
+- Browse extensive game library
+- Advanced search & filtering
+- Detailed game information
+
+**🛒 Shopping Experience**
+- Interactive shopping cart
+- Real-time cart management
+- Seamless checkout process
+
+</td>
+<td width="50%">
+
+**📦 Order Processing**
+- Complete order lifecycle
+- Order history tracking
+- Status management
+
+**⭐ Reviews & Ratings**
+- User feedback system
+- Rating aggregation
+- Review moderation
+
+**👑 Admin Panel**
+- Game inventory management
+- User administration
+- Analytics dashboard
+
+</td>
+</tr>
+</table>
+
+### 🔧 Technical Excellence
+
+<table>
+<tr>
+<td align="center" width="33%">
+<img src="https://img.shields.io/badge/RESTful-API-brightgreen?style=flat-square" /><br/>
+<strong>Clean Architecture</strong><br/>
+<em>Consistent & intuitive endpoints</em>
+</td>
+<td align="center" width="33%">
+<img src="https://img.shields.io/badge/JWT-Security-orange?style=flat-square" /><br/>
+<strong>Secure Authentication</strong><br/>
+<em>Token-based auth system</em>
+</td>
+<td align="center" width="33%">
+<img src="https://img.shields.io/badge/File-Upload-blue?style=flat-square" /><br/>
+<strong>Media Support</strong><br/>
+<em>Image uploads with validation</em>
+</td>
+</tr>
+</table>
+
+</div>
+
+---
 
 ## 🛠️ Tech Stack
 
-| Category           | Technology                |
-| ------------------ | ------------------------- |
-| **Runtime**        | Node.js (v18+)            |
-| **Framework**      | Express.js                |
-| **Database**       | MongoDB with Mongoose ODM |
-| **Authentication** | JSON Web Tokens (JWT)     |
-| **File Upload**    | Multer                    |
-| **Validation**     | Express Validator         |
-| **Logging**        | Morgan + Custom Logger    |
-| **Code Quality**   | Prettier                  |
-| **Security**       | bcryptjs, Helmet          |
+<div align="center">
+
+### Backend Technologies
+
+<table>
+<tr>
+<td align="center" width="20%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="60" height="60" /><br/>
+<strong>Node.js</strong><br/>
+<em>v18+ Runtime</em>
+</td>
+<td align="center" width="20%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" width="60" height="60" /><br/>
+<strong>Express.js</strong><br/>
+<em>Web Framework</em>
+</td>
+<td align="center" width="20%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" width="60" height="60" /><br/>
+<strong>MongoDB</strong><br/>
+<em>Database</em>
+</td>
+<td align="center" width="20%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="60" height="60" /><br/>
+<strong>JWT</strong><br/>
+<em>Authentication</em>
+</td>
+<td align="center" width="20%">
+<img src="https://avatars.githubusercontent.com/u/44036562?s=280&v=4" width="60" height="60" /><br/>
+<strong>Multer</strong><br/>
+<em>File Upload</em>
+</td>
+</tr>
+</table>
+
+### Development & Deployment
+
+<table>
+<tr>
+<td align="center" width="25%">
+<img src="https://prettier.io/icon.png" width="40" height="40" /><br/>
+<strong>Prettier</strong><br/>
+<em>Code Formatting</em>
+</td>
+<td align="center" width="25%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="40" height="40" /><br/>
+<strong>Helmet</strong><br/>
+<em>Security Headers</em>
+</td>
+<td align="center" width="25%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="40" height="40" /><br/>
+<strong>Git</strong><br/>
+<em>Version Control</em>
+</td>
+<td align="center" width="25%">
+<img src="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png" width="40" height="40" /><br/>
+<strong>Vercel</strong><br/>
+<em>Deployment</em>
+</td>
+</tr>
+</table>
+
+</div>
+
+---
 
 ## 📋 Prerequisites
 
-Before running this application, ensure you have:
+<div align="center">
 
-- **Node.js** v18.0.0 or higher
-- **MongoDB** v6.0 or higher (running locally or cloud instance)
-- **npm** v8.0.0 or **yarn** v1.22.0
-- **Git** for version control
+**Before you begin, ensure you have the following installed:**
 
-## 🔧 Installation
+<table>
+<tr>
+<td width="25%" align="center">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="50" height="50" /><br/>
+<strong>Node.js</strong><br/>
+v18.0.0+
+</td>
+<td width="25%" align="center">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" width="50" height="50" /><br/>
+<strong>MongoDB</strong><br/>
+v6.0+
+</td>
+<td width="25%" align="center">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" width="50" height="50" /><br/>
+<strong>npm</strong><br/>
+v8.0.0+
+</td>
+<td width="25%" align="center">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="50" height="50" /><br/>
+<strong>Git</strong><br/>
+Latest
+</td>
+</tr>
+</table>
 
-### 1. Clone the Repository
+</div>
+
+---
+
+## 🚀 Quick Start
+
+<div align="center">
+
+**Get up and running in minutes!**
+
+</div>
+
+### 1️⃣ Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/gamehaven-marketplace-api.git
 cd gamehaven-marketplace-api
 ```
 
-### 2. Install Dependencies
+### 2️⃣ Install Dependencies
 
 ```bash
 npm install
@@ -96,199 +252,138 @@ npm install
 yarn install
 ```
 
-### 3. Environment Setup
+### 3️⃣ Environment Configuration
 
-Create a `.env` file in the root directory:
+Create `.env` file in root directory:
 
 ```env
-# Server Configuration
+# 🌐 Server Configuration
 PORT=3000
 NODE_ENV=development
 
-# Database
+# 🗄️ Database
 MONGODB_URI=mongodb://localhost:27017/gamehaven
 
-# Authentication
+# 🔐 Authentication
 JWT_SECRET=your_super_secure_jwt_secret_key_here
 JWT_EXPIRES_IN=7d
 
-# File Upload
+# 📁 File Upload
 UPLOAD_PATH=uploads
 MAX_FILE_SIZE=5242880
 
-# API Configuration
+# 🚀 API Configuration
 API_VERSION=v1
 CORS_ORIGIN=http://localhost:3000
 
-# Logging
+# 📝 Logging
 LOG_LEVEL=info
 ```
 
-### 4. Database Setup
-
-Ensure MongoDB is running and accessible. The application will automatically create the database and collections on first run.
-
-### 5. Start the Application
+### 4️⃣ Start Development Server
 
 ```bash
-# Development mode with hot reload
+# 🔥 Development mode with hot reload
 npm run dev
 
-# Production mode
+# 🚀 Production mode
 npm start
 
-# Run with debugging
+# 🐛 Debug mode
 npm run debug
 ```
 
+<div align="center">
+
+**🎉 Server running at `http://localhost:3000`**
+
+**📚 API Documentation: `http://localhost:3000/api-docs`**
+
+</div>
+
+---
+
 ## ⚙️ Configuration
 
-### Environment Variables
+<div align="center">
 
-| Variable         | Description               | Default     | Required |
-| ---------------- | ------------------------- | ----------- | -------- |
-| `PORT`           | Server port               | 3000        | No       |
-| `NODE_ENV`       | Environment mode          | development | No       |
-| `MONGODB_URI`    | MongoDB connection string | -           | Yes      |
-| `JWT_SECRET`     | JWT signing secret        | -           | Yes      |
-| `JWT_EXPIRES_IN` | JWT expiration time       | 7d          | No       |
-| `UPLOAD_PATH`    | File upload directory     | uploads     | No       |
-| `MAX_FILE_SIZE`  | Max file size in bytes    | 5MB         | No       |
+### Environment Variables Reference
+
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Default</th>
+<th>Required</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PORT</code></td>
+<td>Server port number</td>
+<td>3000</td>
+<td>❌</td>
+<td><code>8080</code></td>
+</tr>
+<tr>
+<td><code>NODE_ENV</code></td>
+<td>Environment mode</td>
+<td>development</td>
+<td>❌</td>
+<td><code>production</code></td>
+</tr>
+<tr>
+<td><code>MONGODB_URI</code></td>
+<td>MongoDB connection string</td>
+<td>-</td>
+<td>✅</td>
+<td><code>mongodb://localhost:27017/db</code></td>
+</tr>
+<tr>
+<td><code>JWT_SECRET</code></td>
+<td>JWT signing secret</td>
+<td>-</td>
+<td>✅</td>
+<td><code>your_secret_key</code></td>
+</tr>
+<tr>
+<td><code>JWT_EXPIRES_IN</code></td>
+<td>JWT expiration time</td>
+<td>7d</td>
+<td>❌</td>
+<td><code>24h</code></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+---
 
 ## 🎯 Usage
 
-### Quick Start
+<div align="center">
 
-1. Start the server: `npm run dev`
-2. The API will be available at `http://localhost:3000`
-3. API documentation is available at `http://localhost:3000/api-docs` (if Swagger is configured)
+### API Examples
 
-### Example Requests
+</div>
+
+<details>
+<summary><strong>🔐 User Registration</strong></summary>
 
 ```bash
-# Register a new user
 curl -X POST http://localhost:3000/api/auth/register \
   -H "Content-Type: application/json" \
-  -d '{"name":"John Doe","email":"john@example.com","password":"password123"}'
-
-# Login
-curl -X POST http://localhost:3000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"john@example.com","password":"password123"}'
-
-# Get games (requires authentication)
-curl -X GET http://localhost:3000/api/games \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-## 🏗️ Project Structure
-
-```
-gamehaven-marketplace-api/
-├── 📁 src/
-│   ├── 📁 config/
-│   │   └── database.js          # Database connection
-│   ├── 📁 controllers/
-│   │   ├── auth.controller.js   # Authentication logic
-│   │   ├── cart.controller.js   # Cart management
-│   │   ├── game.controller.js   # Game operations
-│   │   ├── order.controller.js  # Order processing
-│   │   └── review.controller.js # Review system
-│   ├── 📁 middleware/
-│   │   ├── auth.middleware.js   # Authentication middleware
-│   │   ├── error.middleware.js  # Error handling
-│   │   ├── logger.middleware.js # Request logging
-│   │   └── upload.middleware.js # File upload handling
-│   ├── 📁 models/
-│   │   ├── user.model.js        # User schema
-│   │   ├── game.model.js        # Game schema
-│   │   ├── cart.model.js        # Cart schema
-│   │   ├── order.model.js       # Order schema
-│   │   └── review.model.js      # Review schema
-│   ├── 📁 routes/
-│   │   ├── index.js             # Route aggregator
-│   │   ├── auth.routes.js       # Authentication routes
-│   │   ├── game.routes.js       # Game routes
-│   │   ├── cart.routes.js       # Cart routes
-│   │   ├── order.routes.js      # Order routes
-│   │   └── review.routes.js     # Review routes
-│   ├── 📁 services/
-│   │   ├── cart.service.js      # Cart business logic
-│   │   └── order.service.js     # Order business logic
-│   └── app.js                   # Application entry point
-├── 📁 uploads/                  # File upload directory
-├── 📁 tests/                    # Test files
-├── 📁 docs/                     # Documentation
-├── .env.example                 # Environment template
-├── .gitignore                   # Git ignore rules
-├── package.json                 # Dependencies and scripts
-└── README.md                    # This file
-```
-
-## 📚 API Documentation
-
-### Swagger UI
-
-The API documentation is available through Swagger UI at:
-
-- Development: `http://localhost:3000/docs`
-- Production: `https://gamehaven-marketplace-api.vercel.app/docs`
-
-### Base URL
-
-```
-Development: http://localhost:3000/api
-Production: https://gamehaven-marketplace-api.vercel.app/api
-```
-
-### Authentication Endpoints
-
-| Method | Endpoint         | Description         | Auth Required |
-| ------ | ---------------- | ------------------- | ------------- |
-| POST   | `/auth/register` | Register new user   | No            |
-| POST   | `/auth/login`    | User login          | No            |
-| POST   | `/auth/logout`   | User logout         | Yes           |
-| GET    | `/auth/profile`  | Get user profile    | Yes           |
-| PUT    | `/auth/profile`  | Update user profile | Yes           |
-
-### Game Endpoints
-
-| Method | Endpoint            | Description               | Auth Required |
-| ------ | ------------------- | ------------------------- | ------------- |
-| GET    | `/games`            | Get all games             | No            |
-| GET    | `/games/:id`        | Get single game           | No            |
-| POST   | `/games`            | Create game (Admin)       | Yes           |
-| PUT    | `/games/:id`        | Update game (Admin)       | Yes           |
-| DELETE | `/games/:id`        | Delete game (Admin)       | Yes           |
-| POST   | `/games/:id/upload` | Upload game cover (Admin) | Yes           |
-
-### Cart Endpoints
-
-| Method | Endpoint               | Description           | Auth Required |
-| ------ | ---------------------- | --------------------- | ------------- |
-| GET    | `/cart`                | Get user cart         | Yes           |
-| POST   | `/cart/add`            | Add item to cart      | Yes           |
-| PUT    | `/cart/update`         | Update cart item      | Yes           |
-| DELETE | `/cart/remove/:gameId` | Remove item from cart | Yes           |
-| DELETE | `/cart/clear`          | Clear entire cart     | Yes           |
-
-### Request/Response Examples
-
-#### User Registration
-
-```http
-POST /api/auth/register
-Content-Type: application/json
-
-{
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "password": "securePassword123"
-}
+  -d '{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123"
+  }'
 ```
 
 **Response:**
-
 ```json
 {
   "status": "success",
@@ -297,7 +392,7 @@ Content-Type: application/json
     "user": {
       "id": "64a7b8c9d1e2f3g4h5i6j7k8",
       "name": "John Doe",
-      "email": "john.doe@example.com",
+      "email": "john@example.com",
       "role": "user"
     },
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
@@ -305,332 +400,476 @@ Content-Type: application/json
 }
 ```
 
-#### Create Game (Admin)
+</details>
 
-```http
-POST /api/games
-Content-Type: multipart/form-data
-Authorization: Bearer YOUR_JWT_TOKEN
+<details>
+<summary><strong>🔑 User Login</strong></summary>
 
-{
-  "title": "The Legend of Zelda: Breath of the Wild",
-  "description": "An action-adventure game set in a vast open world",
-  "price": 59.99,
-  "platform": "Nintendo Switch",
-  "genre": "Adventure",
-  "stock": 50,
-  "coverImage": (binary)
-}
+```bash
+curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john@example.com",
+    "password": "password123"
+  }'
 ```
 
-**Response:**
+</details>
 
-```json
-{
-  "status": "success",
-  "data": {
-    "game": {
-      "id": "64a7b8c9d1e2f3g4h5i6j7k8",
-      "title": "The Legend of Zelda: Breath of the Wild",
-      "description": "An action-adventure game set in a vast open world",
-      "price": 59.99,
-      "platform": "Nintendo Switch",
-      "genre": "Adventure",
-      "stock": 50,
-      "coverImage": "https://example.com/images/zelda.jpg"
-    }
-  }
-}
+<details>
+<summary><strong>🎮 Get Games</strong></summary>
+
+```bash
+curl -X GET http://localhost:3000/api/games \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
-## 🚀 Deployment
+</details>
 
-### Vercel Deployment
+---
 
-The API is deployed on Vercel. The deployment process is automated through GitHub integration:
+## 🏗️ Project Structure
 
-1. Push changes to the main branch
-2. Vercel automatically builds and deploys
-3. Environment variables are configured in Vercel dashboard
+<div align="center">
 
-### Environment Variables for Production
+### Clean Architecture Overview
 
-```env
-NODE_ENV=production
-MONGODB_URI=your_production_mongodb_uri
-JWT_SECRET=your_production_jwt_secret
-JWT_EXPIRES_IN=7d
-```
-
-### Project Structure
+</div>
 
 ```
 gamehaven-marketplace-api/
 ├── 📁 src/
 │   ├── 📁 config/
-│   │   ├── database.js          # Database connection
-│   │   └── swagger.js           # Swagger documentation config
-│   ├── 📁 controllers/
-│   │   ├── auth.controller.js   # Authentication logic
-│   │   ├── cart.controller.js   # Cart management
-│   │   └── game.controller.js   # Game operations
-│   ├── 📁 middleware/
-│   │   ├── auth.middleware.js   # Authentication middleware
-│   │   ├── error.middleware.js  # Error handling
-│   │   └── upload.middleware.js # File upload handling
-│   ├── 📁 models/
-│   │   ├── user.model.js        # User schema
-│   │   ├── game.model.js        # Game schema
-│   │   └── cart.model.js        # Cart schema
-│   ├── 📁 routes/
-│   │   ├── auth.routes.js       # Authentication routes
-│   │   ├── game.routes.js       # Game routes
-│   │   └── cart.routes.js       # Cart routes
-│   ├── 📁 public/              # Static files
-│   │   └── index.html          # Swagger UI
-│   └── app.js                  # Application entry point
-├── 📁 uploads/                 # File upload directory
-├── .env.example               # Environment template
-├── .gitignore                # Git ignore rules
-├── package.json              # Dependencies and scripts
-├── vercel.json              # Vercel configuration
-└── README.md                # This file
+│   │   ├── database.js          # 🗄️ Database connection
+│   │   └── swagger.js           # 📖 API documentation
+│   │
+│   ├── 📁 controllers/          # 🎮 Business logic
+│   │   ├── auth.controller.js   # 🔐 Authentication
+│   │   ├── cart.controller.js   # 🛒 Cart management
+│   │   ├── game.controller.js   # 🎯 Game operations
+│   │   ├── order.controller.js  # 📦 Order processing
+│   │   └── review.controller.js # ⭐ Review system
+│   │
+│   ├── 📁 middleware/           # 🛡️ Request processing
+│   │   ├── auth.middleware.js   # 🔒 Authentication
+│   │   ├── error.middleware.js  # ❌ Error handling
+│   │   ├── logger.middleware.js # 📝 Request logging
+│   │   └── upload.middleware.js # 📁 File uploads
+│   │
+│   ├── 📁 models/               # 🗃️ Data schemas
+│   │   ├── user.model.js        # 👤 User schema
+│   │   ├── game.model.js        # 🎮 Game schema
+│   │   ├── cart.model.js        # 🛒 Cart schema
+│   │   ├── order.model.js       # 📦 Order schema
+│   │   └── review.model.js      # ⭐ Review schema
+│   │
+│   ├── 📁 routes/               # 🛣️ API endpoints
+│   │   ├── index.js             # 🏠 Route aggregator
+│   │   ├── auth.routes.js       # 🔐 Auth routes
+│   │   ├── game.routes.js       # 🎮 Game routes
+│   │   ├── cart.routes.js       # 🛒 Cart routes
+│   │   ├── order.routes.js      # 📦 Order routes
+│   │   └── review.routes.js     # ⭐ Review routes
+│   │
+│   ├── 📁 services/             # 🔧 Business services
+│   │   ├── cart.service.js      # 🛒 Cart logic
+│   │   └── order.service.js     # 📦 Order logic
+│   │
+│   └── app.js                   # 🚀 Application entry
+│
+├── 📁 uploads/                  # 📁 File storage
+├── 📁 tests/                    # 🧪 Test files
+├── 📁 docs/                     # 📚 Documentation
+├── .env.example                 # ⚙️ Environment template
+├── .gitignore                   # 🚫 Git ignore rules
+├── package.json                 # 📦 Dependencies
+├── vercel.json                  # 🚀 Deployment config
+└── README.md                    # 📖 This file
 ```
-
-### Vercel Configuration
-
-```json
-{
-  "version": 2,
-  "builds": [
-    {
-      "src": "src/app.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "public/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/docs",
-      "dest": "/public/index.html"
-    },
-    {
-      "src": "/api-docs.json",
-      "dest": "/src/app.js"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/src/app.js"
-    }
-  ]
-}
-```
-
-## 🔐 Security Features
-
-- **Password Security**: Bcrypt hashing with salt rounds
-- **JWT Implementation**: Secure token-based authentication
-- **Input Validation**: Comprehensive request validation using express-validator
-- **Rate Limiting**: Protection against brute force attacks
-- **CORS Configuration**: Cross-origin resource sharing controls
-- **Helmet Integration**: Security headers middleware
-- **Environment Variables**: Sensitive data protection
-- **Role-Based Access Control**: User and Admin role separation
-- **File Upload Security**: File type and size validation
-
-## 🧪 Testing
-
-```bash
-# Run all tests
-npm test
-
-# Run tests with coverage
-npm run test:coverage
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run integration tests
-npm run test:integration
-```
-
-## 🚀 Deployment
-
-### Docker Deployment
-
-```dockerfile
-# Dockerfile example
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-EXPOSE 3000
-CMD ["npm", "start"]
-```
-
-## 👥 Team Roles
-
-| Team Member            | Role                     | Responsibilities                                           |
-| ---------------------- | ------------------------ | ---------------------------------------------------------- |
-| **Mohamed Gamal**      | 👑 **Team Leader**       | User Registration, User Login, Authentication & Validation |
-| **Abdelrhman Mohamed** | 🛒 **Cart Specialist**   | Add Game to Cart, View Cart Implementation                 |
-| **Mohamed Rafat**      | 🎮 **Game Catalog Lead** | View Games Catalog, Single Game View                       |
-| **Rahaf Hazem**        | 💼 **Orders & Admin**    | Place Order, Admin Game Management                         |
-
-## 🔄 Development Workflow
-
-### Individual Team Member Workflow
-
-#### 👑 Mohamed Gamal (Team Leader - Authentication)
-
-**Tasks**: User Registration & Login, Authentication Middleware, Validation
-
-- **Branch**: `feat/auth-system`
-- **Files to work on**:
-  - `src/controllers/auth.controller.js`
-  - `src/middleware/auth.middleware.js`
-  - `src/models/user.model.js`
-  - `src/routes/auth.routes.js`
-- **Commits**:
-  - `feat(auth): implement user registration endpoint`
-  - `feat(auth): add login functionality with JWT`
-  - `feat(middleware): create authentication middleware`
-  - `feat(validation): add input validation for auth routes`
-
-#### 🛒 Abdelrhman Mohamed (Cart Management)
-
-**Tasks**: Shopping Cart Operations
-
-- **Branch**: `feat/cart-management`
-- **Files to work on**:
-  - `src/controllers/cart.controller.js`
-  - `src/models/cart.model.js`
-  - `src/routes/cart.routes.js`
-  - `src/services/cart.service.js`
-- **Commits**:
-  - `feat(cart): implement add item to cart functionality`
-  - `feat(cart): create view cart endpoint`
-  - `feat(cart): add update cart item quantity`
-  - `feat(cart): implement remove item from cart`
-
-#### 🎮 Mohamed Rafat (Game Catalog)
-
-**Tasks**: Game Display and Management
-
-- **Branch**: `feat/game-catalog`
-- **Files to work on**:
-  - `src/controllers/game.controller.js`
-  - `src/models/game.model.js`
-  - `src/routes/game.routes.js`
-  - `src/middleware/upload.middleware.js`
-- **Commits**:
-  - `feat(games): create view all games endpoint`
-  - `feat(games): implement single game view`
-  - `feat(games): add game search and filter functionality`
-  - `feat(upload): implement game cover image upload`
-
-#### 💼 Rahaf Hazem (Orders & Admin)
-
-**Tasks**: Order Processing and Admin Features
-
-- **Branch**: `feat/orders-admin`
-- **Files to work on**:
-  - `src/controllers/order.controller.js`
-  - `src/models/order.model.js`
-  - `src/routes/order.routes.js`
-  - `src/services/order.service.js`
-- **Commits**:
-  - `feat(orders): implement place order functionality`
-  - `feat(orders): create order history endpoint`
-  - `feat(admin): add admin game management features`
-  - `feat(admin): implement order status management`
-
-### Branch Strategy
-
-- `main` - Production ready code
-- `develop` - Integration branch
-- `feat/feature-name` - Feature development
-- `fix/bug-name` - Bug fixes
-- `docs/doc-name` - Documentation updates
-
-### Commit Convention
-
-```
-type(scope): description
-
-Types:
-- feat: New feature
-- fix: Bug fix
-- docs: Documentation changes
-- style: Code style changes (formatting, etc)
-- refactor: Code refactoring
-- test: Adding or updating tests
-- chore: Maintenance tasks
-- perf: Performance improvements
-- ci: CI/CD changes
-- build: Build system changes
-- revert: Reverting previous commits
-
-Examples:
-feat(auth): add JWT token refresh functionality
-fix(cart): resolve cart item duplication issue
-docs(readme): update API documentation
-refactor(models): optimize database queries
-style(controllers): format code with prettier
-test(auth): add unit tests for login functionality
-chore(deps): update dependencies to latest versions
-perf(database): optimize query performance
-```
-
-### Code Quality Standards
-
-- **Prettier**: Code formatting
-- **Husky**: Git hooks for quality checks
-- **Conventional Commits**: Standardized commit messages
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feat/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'feat: add amazing feature'`)
-4. **Push** to the branch (`git push origin feat/amazing-feature`)
-5. **Open** a Pull Request
-
-### Pull Request Guidelines
-
-- Provide clear description of changes
-- Include relevant tests
-- Update documentation if needed
-- Ensure all checks pass
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/your-username/gamehaven-marketplace-api/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/gamehaven-marketplace-api/discussions)
-- **Email**: support@gamehaven.com
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Express.js community for the excellent framework
-- MongoDB team for the robust database solution
-- All contributors who helped make this project better
 
 ---
 
+## 📖 API Documentation
+
 <div align="center">
 
-**⭐ If you find this project helpful, please consider giving it a star!**
+### 🌐 Live Documentation
 
-_Made with ❤️ by the GameHaven Team_
+**Production**: [`https://gamehaven-marketplace-api.vercel.app/docs`](https://gamehaven-marketplace-api.vercel.app/docs)
+
+**Development**: `http://localhost:3000/docs`
+
+### 🚀 Base URLs
+
+<table>
+<tr>
+<td align="center" width="50%">
+<strong>🔧 Development</strong><br/>
+<code>http://localhost:3000/api</code>
+</td>
+<td align="center" width="50%">
+<strong>🌍 Production</strong><br/>
+<code>https://gamehaven-marketplace-api.vercel.app/api</code>
+</td>
+</tr>
+</table>
+
+</div>
+
+### 📋 API Endpoints Overview
+
+<details>
+<summary><strong>🔐 Authentication Endpoints</strong></summary>
+
+<div align="center">
+
+| Method | Endpoint | Description | Auth | Response |
+|--------|----------|-------------|------|----------|
+| `POST` | `/auth/register` | Register new user | ❌ | User + Token |
+| `POST` | `/auth/login` | User login | ❌ | User + Token |
+| `POST` | `/auth/logout` | User logout | ✅ | Success message |
+| `GET` | `/auth/profile` | Get user profile | ✅ | User data |
+| `PUT` | `/auth/profile` | Update profile | ✅ | Updated user |
+
+</div>
+
+</details>
+
+<details>
+<summary><strong>🎮 Game Endpoints</strong></summary>
+
+<div align="center">
+
+| Method | Endpoint | Description | Auth | Role |
+|--------|----------|-------------|------|------|
+| `GET` | `/games` | Get all games | ❌ | Public |
+| `GET` | `/games/:id` | Get single game | ❌ | Public |
+| `POST` | `/games` | Create game | ✅ | Admin |
+| `PUT` | `/games/:id` | Update game | ✅ | Admin |
+| `DELETE` | `/games/:id` | Delete game | ✅ | Admin |
+| `POST` | `/games/:id/upload` | Upload cover | ✅ | Admin |
+
+</div>
+
+</details>
+
+<details>
+<summary><strong>🛒 Cart Endpoints</strong></summary>
+
+<div align="center">
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| `GET` | `/cart` | Get user cart | ✅ |
+| `POST` | `/cart/add` | Add item to cart | ✅ |
+| `PUT` | `/cart/update` | Update cart item | ✅ |
+| `DELETE` | `/cart/remove/:gameId` | Remove item | ✅ |
+| `DELETE` | `/cart/clear` | Clear entire cart | ✅ |
+
+</div>
+
+</details>
+
+<details>
+<summary><strong>📦 Order Endpoints</strong></summary>
+
+<div align="center">
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| `POST` | `/orders` | Place new order | ✅ |
+| `GET` | `/orders` | Get order history | ✅ |
+| `GET` | `/orders/:id` | Get single order | ✅ |
+| `PUT` | `/orders/:id/status` | Update status | ✅ |
+
+</div>
+
+</details>
+
+---
+
+## 🔐 Security Features
+
+<div align="center">
+
+### 🛡️ Comprehensive Security Implementation
+
+<table>
+<tr>
+<td width="50%">
+
+**🔒 Authentication & Authorization**
+- ✅ bcrypt password hashing (12 rounds)
+- ✅ JWT with secure tokens
+- ✅ Role-based access control
+- ✅ Token refresh mechanism
+
+**🛡️ Input Protection**
+- ✅ Express-validator integration
+- ✅ SQL injection prevention
+- ✅ XSS attack mitigation
+- ✅ Request sanitization
+
+</td>
+<td width="50%">
+
+**🚦 Rate Limiting & Security**
+- ✅ API rate limiting
+- ✅ Helmet security headers
+- ✅ CORS configuration
+- ✅ File upload validation
+
+**🔐 Environment Security**
+- ✅ Environment variable protection
+- ✅ Secure cookie handling
+- ✅ HTTPS enforcement
+- ✅ Error message sanitization
+
+</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+## 👥 Team Roles
+
+<div align="center">
+
+### 🚀 Meet Our Development Team
+
+<table>
+<tr>
+<td width="25%" align="center">
+<img src="https://img.shields.io/badge/👑-Team_Leader-gold?style=for-the-badge" /><br/>
+<strong>Mohamed Gamal</strong><br/>
+<em>Authentication & Security</em><br/>
+🔐 User Registration & Login<br/>
+🛡️ Middleware & Validation
+</td>
+<td width="25%" align="center">
+<img src="https://img.shields.io/badge/🛒-Cart_Specialist-blue?style=for-the-badge" /><br/>
+<strong>Abdelrhman Mohamed</strong><br/>
+<em>Shopping Cart System</em><br/>
+🛒 Cart Management<br/>
+📝 Cart Operations
+</td>
+<td width="25%" align="center">
+<img src="https://img.shields.io/badge/🎮-Game_Catalog_Lead-green?style=for-the-badge" /><br/>
+<strong>Mohamed Rafat</strong><br/>
+<em>Game Management</em><br/>
+🎯 Game Catalog<br/>
+🔍 Search & Filters
+</td>
+<td width="25%" align="center">
+<img src="https://img.shields.io/badge/💼-Orders_&_Admin-purple?style=for-the-badge" /><br/>
+<strong>Rahaf Hazem</strong><br/>
+<em>Orders & Administration</em><br/>
+📦 Order Processing<br/>
+👑 Admin Features
+</td>
+</tr>
+</table>
+
+### 🔄 Development Workflow
+
+**Branch Strategy & Commit Standards**
+
+<table>
+<tr>
+<td width="50%">
+
+**🌿 Branch Strategy**
+- `main` → Production ready code
+- `feat/feature-name` → New features
+- `fix/bug-name` → Bug fixes
+- `docs/update-name` → Documentation
+
+</td>
+<td width="50%">
+
+**📝 Commit Convention**
+```
+feat(scope): description
+fix(scope): description  
+docs(scope): description
+style(scope): description
+refactor(scope): description
+```
+
+</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+## 🤝 Contributing
+
+<div align="center">
+
+### 💡 We Welcome Contributions!
+
+**Help us make GameHaven even better**
+
+### How to Contribute
+
+<table>
+<tr>
+<td width="20%" align="center">
+<strong>1️⃣</strong><br/>
+🍴 Fork the repo
+</td>
+<td width="20%" align="center">
+<strong>2️⃣</strong><br/>
+🌿 Create feature branch
+</td>
+<td width="20%" align="center">
+<strong>3️⃣</strong><br/>
+💻 Make changes
+</td>
+<td width="20%" align="center">
+<strong>4️⃣</strong><br/>
+🧪 Add tests
+</td>
+<td width="20%" align="center">
+<strong>5️⃣</strong><br/>
+📤 Submit PR
+</td>
+</tr>
+</table>
+
+</div>
+
+### 📋 Contribution Guidelines
+
+<details>
+<summary><strong>Pull Request Checklist</strong></summary>
+
+- [ ] 📝 Clear description of changes
+- [ ] 🧪 Tests added/updated
+- [ ] 📚 Documentation updated
+- [ ] ✅ All checks passing
+- [ ] 🎨 Code follows style guide
+- [ ] 🔒 Security considerations addressed
+
+</details>
+
+<details>
+<summary><strong>Development Setup</strong></summary>
+
+```bash
+# Fork and clone your fork
+git clone https://github.com/YOUR_USERNAME/gamehaven-marketplace-api.git
+
+# Create feature branch
+git checkout -b feat/amazing-feature
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run tests
+npm test
+
+# Commit changes
+git commit -m "feat: add amazing feature"
+
+# Push to your fork
+git push origin feat/amazing-feature
+```
+
+</details>
+
+---
+
+## 📞 Support & Community
+
+<div align="center">
+
+### 💬 Get Help & Connect
+
+<table>
+<tr>
+<td width="33%" align="center">
+<a href="https://github.com/mo0hamed-shoaib/gamehaven-marketplace-api/issues">
+<img src="https://img.shields.io/badge/🐛-Report_Bug-red?style=for-the-badge" />
+</a><br/>
+<strong>Bug Reports</strong>
+</td>
+<td width="33%" align="center">
+<a href="https://github.com/mo0hamed-shoaib/gamehaven-marketplace-api/discussions">
+<img src="https://img.shields.io/badge/💭-Discussions-blue?style=for-the-badge" />
+</a><br/>
+<strong>Community</strong>
+</td>
+<td width="33%" align="center">
+<a href="mailto:mohamed.gamal.shoaib@gmail.com">
+<img src="https://img.shields.io/badge/📧-Email_Support-green?style=for-the-badge" />
+</a><br/>
+<strong>Direct Support</strong>
+</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+## 📄 License
+
+<div align="center">
+
+<table>
+<tr>
+<td width="100%" align="center">
+<a href="LICENSE">
+<img src="https://img.shields.io/badge/📄-MIT_License-blue?style=for-the-badge" />
+</a><br/>
+<strong>MIT License</strong><br/>
+Open-source and free to use
+</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+## 🙏 Acknowledgments
+
+<div align="center">
+
+<table>
+<tr>
+<td width="100%" align="center">
+<img src="https://img.shields.io/badge/🙏-Acknowledgments-yellow?style=for-the-badge" /><br/>
+<strong>Special Thanks</strong><br/>
+Express.js, MongoDB, and the Open Source Community
+</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+<div align="center" style="margin-top: 50px; font-family:Segoe UI, sans-serif;">
+
+<h2>🚀 Enjoyed this Project?</h2>
+
+<p><strong>Star it • Share it • Fork it</strong></p>
+
+<a href="https://github.com/mo0hamed-shoaib/gamehaven-marketplace-api">
+  <img src="https://img.shields.io/github/stars/mo0hamed-shoaib/gamehaven-marketplace-api?style=for-the-badge&label=Give%20a%20Star&logo=github" alt="GitHub Stars" />
+</a>
+
+<p style="margin-top:20px;"><em>Built with ❤️ fueled by ☕ and curiosity</em></p>
+
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&duration=3000&pause=1000&color=00C2FF&center=true&vCenter=true&width=435&lines=Thanks+for+visiting!+;Happy+Coding+%F0%9F%8E%93" alt="Thanks for visiting!" />
 
 </div>
