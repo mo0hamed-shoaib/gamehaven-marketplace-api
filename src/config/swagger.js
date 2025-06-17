@@ -48,14 +48,48 @@ const options = {
                 },
                 Game: {
                     type: 'object',
+                    required: ['title', 'description', 'price', 'platform', 'genre', 'stock'],
                     properties: {
-                        _id: { type: 'string', example: '60d21b4667d0d8992e610c85' },
-                        title: { type: 'string', example: 'Elden Ring' },
-                        description: { type: 'string', example: 'Open-world action RPG' },
-                        price: { type: 'number', example: 49.99 },
-                        genre: { type: 'string', example: 'RPG' },
-                        platform: { type: 'string', example: 'PC' },
-                        coverImage: { type: 'string', example: 'https://example.com/eldenring.jpg' }
+                        title: {
+                            type: 'string',
+                            description: "The game's title",
+                            example: 'The Legend of Zelda: Breath of the Wild'
+                        },
+                        description: {
+                            type: 'string',
+                            description: 'Detailed description of the game',
+                            example: 'An action-adventure game set in a vast open world where you can explore, fight, and solve puzzles.'
+                        },
+                        price: {
+                            type: 'number',
+                            format: 'float',
+                            minimum: 0,
+                            description: "The game's price in USD",
+                            example: 59.99
+                        },
+                        platform: {
+                            type: 'string',
+                            enum: ['PC', 'PlayStation', 'Xbox', 'Nintendo Switch'],
+                            description: "The game's platform",
+                            example: 'Nintendo Switch'
+                        },
+                        genre: {
+                            type: 'string',
+                            enum: ['Action', 'Adventure', 'RPG', 'Strategy', 'Sports', 'Racing', 'Puzzle'],
+                            description: "The game's genre",
+                            example: 'Adventure'
+                        },
+                        stock: {
+                            type: 'integer',
+                            minimum: 0,
+                            description: 'Available stock quantity',
+                            example: 50
+                        },
+                        coverImage: {
+                            type: 'string',
+                            format: 'binary',
+                            description: "The game's cover image"
+                        }
                     }
                 },
                 CartItem: {
@@ -107,21 +141,49 @@ const options = {
                         }
                     }
                 },
-                GamesListResponse: {
-                    type: 'object',
-                    properties: {
-                        status: { type: 'string', example: 'success' },
-                        data: {
-                            type: 'array',
-                            items: { $ref: '#/components/schemas/Game' }
-                        }
-                    }
-                },
                 GameResponse: {
                     type: 'object',
                     properties: {
-                        status: { type: 'string', example: 'success' },
-                        data: { $ref: '#/components/schemas/Game' }
+                        status: {
+                            type: 'string',
+                            example: 'success'
+                        },
+                        data: {
+                            type: 'object',
+                            properties: {
+                                game: { $ref: '#/components/schemas/Game' }
+                            }
+                        }
+                    }
+                },
+                GamesListResponse: {
+                    type: 'object',
+                    properties: {
+                        status: {
+                            type: 'string',
+                            example: 'success'
+                        },
+                        data: {
+                            type: 'object',
+                            properties: {
+                                games: {
+                                    type: 'array',
+                                    items: { $ref: '#/components/schemas/Game' }
+                                },
+                                page: {
+                                    type: 'integer',
+                                    example: 1
+                                },
+                                pages: {
+                                    type: 'integer',
+                                    example: 5
+                                },
+                                total: {
+                                    type: 'integer',
+                                    example: 50
+                                }
+                            }
+                        }
                     }
                 }
             },
