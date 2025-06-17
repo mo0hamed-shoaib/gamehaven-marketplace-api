@@ -28,6 +28,7 @@ app.use(morgan('dev'));
 app.use(requestLogger);
 
 // Swagger Documentation
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 // Static files

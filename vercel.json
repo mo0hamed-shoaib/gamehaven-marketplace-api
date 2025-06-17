@@ -16,6 +16,9 @@
       "dest": "src/app.js"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
       "dest": "src/app.js"
     }
