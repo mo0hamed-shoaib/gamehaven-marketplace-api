@@ -95,7 +95,7 @@ router.use(protect);
 
 /**
  * @swagger
- * /api/orders:
+ * /orders:
  *   get:
  *     summary: Get all orders for the authenticated user
  *     description: Retrieve a paginated list of orders for the currently logged-in user
@@ -139,7 +139,7 @@ router.get('/', getOrders);
 
 /**
  * @swagger
- * /api/orders/{id}:
+ * /orders/{id}:
  *   get:
  *     summary: Get a specific order by ID
  *     description: Retrieve detailed information about a specific order
@@ -183,7 +183,7 @@ router.get('/:id', getOrder);
 
 /**
  * @swagger
- * /api/orders:
+ * /orders:
  *   post:
  *     summary: Create a new order
  *     description: Create a new order with items from the user's cart
@@ -239,7 +239,7 @@ router.post('/', createOrder);
 
 /**
  * @swagger
- * /api/orders/{id}/status:
+ * /orders/{id}/status:
  *   put:
  *     summary: Update order status (Admin only)
  *     description: Change the status of an existing order (pending, completed, or cancelled)

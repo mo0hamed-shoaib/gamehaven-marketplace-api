@@ -14,11 +14,11 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:3000/api',
+                url: 'http://localhost:3000',
                 description: 'Development server'
             },
             {
-                url: 'https://gamehaven-marketplace-api.vercel.app/api',
+                url: 'https://gamehaven-marketplace-api.vercel.app',
                 description: 'Production server'
             }
         ],

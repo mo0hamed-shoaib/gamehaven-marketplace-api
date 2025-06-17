@@ -89,7 +89,7 @@ router.use(protect);
 
 /**
  * @swagger
- * /api/cart:
+ * /cart:
  *   get:
  *     summary: Get user's shopping cart
  *     description: Retrieve the current user's shopping cart with all items
@@ -120,7 +120,7 @@ router.get('/', getCart);
 
 /**
  * @swagger
- * /api/cart:
+ * /cart:
  *   post:
  *     summary: Add item to cart
  *     description: Add a new game to the user's shopping cart
@@ -172,7 +172,7 @@ router.post('/', cartItemValidation, addToCart);
 
 /**
  * @swagger
- * /api/cart/{itemId}:
+ * /cart/{itemId}:
  *   put:
  *     summary: Update cart item quantity
  *     description: Modify the quantity of an item in the shopping cart
