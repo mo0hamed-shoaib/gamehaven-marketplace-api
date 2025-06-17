@@ -110,7 +110,7 @@ const gameValidation = [
 
 /**
  * @swagger
- * /games:
+ * /api/games:
  *   get:
  *     summary: Get all games
  *     description: Retrieve a paginated list of games with optional filtering
@@ -163,7 +163,7 @@ router.get('/', getGames);
 
 /**
  * @swagger
- * /games/{id}:
+ * /api/games/{id}:
  *   get:
  *     summary: Get a game by ID
  *     description: Retrieve detailed information about a specific game
@@ -199,7 +199,7 @@ router.get('/:id', getGame);
 
 /**
  * @swagger
- * /games:
+ * /api/games:
  *   post:
  *     summary: Create a new game
  *     description: Add a new game to the marketplace (Admin only)

@@ -16,6 +16,10 @@ const options = {
             {
                 url: 'http://localhost:3000/api',
                 description: 'Development server'
+            },
+            {
+                url: 'https://gamehaven-marketplace-api.vercel.app/api',
+                description: 'Production server'
             }
         ],
         components: {
