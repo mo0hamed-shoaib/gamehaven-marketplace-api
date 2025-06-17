@@ -28,8 +28,8 @@ app.use(morgan('dev'));
 app.use(requestLogger);
 
 // Swagger Documentation
-app.use('/', swaggerUi.serve);
-app.get('/', swaggerUi.setup(swaggerSpecs, {
+app.use('/docs', swaggerUi.serve);
+app.get('/docs', swaggerUi.setup(swaggerSpecs, {
   explorer: true,
   customCss: '.swagger-ui .topbar { display: none }',
   customSiteTitle: "GameHaven API Documentation"
@@ -43,6 +43,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/games', gameRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
+
+// Root route redirect to docs
+app.get('/', (req, res) => {
+  res.redirect('/docs');
+});
 
 // Error handling
 app.use(errorHandler);

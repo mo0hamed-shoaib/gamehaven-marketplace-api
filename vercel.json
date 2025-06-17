@@ -12,11 +12,8 @@
       "dest": "src/app.js"
     },
     {
-      "src": "/api-docs/(.*)",
+      "src": "/docs(.*)",
       "dest": "src/app.js"
-    },
-    {
-      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
