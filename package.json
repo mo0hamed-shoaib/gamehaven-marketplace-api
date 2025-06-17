@@ -7,7 +7,8 @@
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
     "test": "jest",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build-swagger": "node scripts/build-swagger.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

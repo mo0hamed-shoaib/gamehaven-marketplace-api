@@ -13,6 +13,21 @@ const router = express.Router();
  * @swagger
  * components:
  *   schemas:
+ *     OrderItem:
+ *       type: object
+ *       required:
+ *         - game
+ *         - quantity
+ *       properties:
+ *         game:
+ *           type: string
+ *           description: Game ID
+ *           example: 60d21b4667d0d8992e610c85
+ *         quantity:
+ *           type: integer
+ *           minimum: 1
+ *           description: Quantity of the game
+ *           example: 2
  *     Order:
  *       type: object
  *       required:
@@ -21,29 +36,54 @@ const router = express.Router();
  *         items:
  *           type: array
  *           items:
- *             type: object
- *             required:
- *               - game
- *               - quantity
- *             properties:
- *               game:
- *                 type: string
- *                 description: Game ID
- *               quantity:
- *                 type: integer
- *                 minimum: 1
- *                 description: Quantity of the game
+ *             $ref: '#/components/schemas/OrderItem'
  *         status:
  *           type: string
  *           enum: [pending, completed, cancelled]
  *           default: pending
  *           description: Order status
+ *           example: pending
  *         totalAmount:
  *           type: number
  *           description: Total order amount
+ *           example: 119.98
  *         user:
  *           type: string
  *           description: User ID who placed the order
+ *           example: 60d21b4667d0d8992e610c86
+ *     OrderResponse:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: string
+ *           example: success
+ *         data:
+ *           type: object
+ *           properties:
+ *             order:
+ *               $ref: '#/components/schemas/Order'
+ *     OrdersListResponse:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: string
+ *           example: success
+ *         data:
+ *           type: object
+ *           properties:
+ *             orders:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Order'
+ *             page:
+ *               type: integer
+ *               example: 1
+ *             pages:
+ *               type: integer
+ *               example: 5
+ *             total:
+ *               type: integer
+ *               example: 50
  */
 
 const orderStatusValidation = [
@@ -58,6 +98,7 @@ router.use(protect);
  * /orders:
  *   get:
  *     summary: Get all orders for the authenticated user
+ *     description: Retrieve a paginated list of orders for the currently logged-in user
  *     tags: [Orders]
  *     security:
  *       - bearerAuth: []
@@ -80,25 +121,19 @@ router.use(protect);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     orders:
- *                       type: array
- *                       items:
- *                         $ref: '#/components/schemas/Order'
- *                     page:
- *                       type: integer
- *                     pages:
- *                       type: integer
- *                     total:
- *                       type: integer
+ *               $ref: '#/components/schemas/OrdersListResponse'
  *       401:
  *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.get('/', getOrders);
 
@@ -107,6 +142,7 @@ router.get('/', getOrders);
  * /orders/{id}:
  *   get:
  *     summary: Get a specific order by ID
+ *     description: Retrieve detailed information about a specific order
  *     tags: [Orders]
  *     security:
  *       - bearerAuth: []
@@ -123,19 +159,25 @@ router.get('/', getOrders);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     order:
- *                       $ref: '#/components/schemas/Order'
+ *               $ref: '#/components/schemas/OrderResponse'
  *       401:
  *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
  *       404:
  *         description: Order not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/NotFoundError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.get('/:id', getOrder);
 
@@ -144,6 +186,7 @@ router.get('/:id', getOrder);
  * /orders:
  *   post:
  *     summary: Create a new order
+ *     description: Create a new order with items from the user's cart
  *     tags: [Orders]
  *     security:
  *       - bearerAuth: []
@@ -159,37 +202,38 @@ router.get('/:id', getOrder);
  *               items:
  *                 type: array
  *                 items:
- *                   type: object
- *                   required:
- *                     - game
- *                     - quantity
- *                   properties:
- *                     game:
- *                       type: string
- *                       description: Game ID
- *                     quantity:
- *                       type: integer
- *                       minimum: 1
- *                       description: Quantity of the game
+ *                   $ref: '#/components/schemas/OrderItem'
+ *           example:
+ *             items:
+ *               - game: 60d21b4667d0d8992e610c85
+ *                 quantity: 2
+ *               - game: 60d21b4667d0d8992e610c86
+ *                 quantity: 1
  *     responses:
  *       201:
  *         description: Order created successfully
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     order:
- *                       $ref: '#/components/schemas/Order'
+ *               $ref: '#/components/schemas/OrderResponse'
  *       400:
  *         description: Invalid input data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ValidationError'
  *       401:
  *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.post('/', createOrder);
 
@@ -198,6 +242,7 @@ router.post('/', createOrder);
  * /orders/{id}/status:
  *   put:
  *     summary: Update order status (Admin only)
+ *     description: Change the status of an existing order (pending, completed, or cancelled)
  *     tags: [Orders]
  *     security:
  *       - bearerAuth: []
@@ -221,9 +266,29 @@ router.post('/', createOrder);
  *                 type: string
  *                 enum: [pending, completed, cancelled]
  *                 description: New order status
+ *           example:
+ *             status: completed
  *     responses:
  *       200:
  *         description: Order status updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/OrderResponse'
+ *       400:
+ *         description: Invalid status
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         description: Not admin
  *         content:
  *           application/json:
  *             schema:
@@ -231,19 +296,22 @@ router.post('/', createOrder);
  *               properties:
  *                 status:
  *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     order:
- *                       $ref: '#/components/schemas/Order'
- *       400:
- *         description: Invalid status
- *       401:
- *         description: Not authorized
- *       403:
- *         description: Not admin
+ *                   example: error
+ *                 message:
+ *                   type: string
+ *                   example: Not authorized as admin
  *       404:
  *         description: Order not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/NotFoundError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.put('/:id/status', admin, orderStatusValidation, updateOrderStatus);
 

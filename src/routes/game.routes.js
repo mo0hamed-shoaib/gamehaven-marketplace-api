@@ -29,30 +29,69 @@ const router = express.Router();
  *         title:
  *           type: string
  *           description: The game's title
+ *           example: "The Legend of Zelda: Breath of the Wild"
  *         description:
  *           type: string
- *           description: The game's description
+ *           description: Detailed description of the game
+ *           example: An action-adventure game set in a vast open world where you can explore, fight, and solve puzzles.
  *         price:
  *           type: number
  *           format: float
  *           minimum: 0
- *           description: The game's price
+ *           description: The game's price in USD
+ *           example: 59.99
  *         platform:
  *           type: string
  *           enum: [PC, PlayStation, Xbox, Nintendo Switch]
  *           description: The game's platform
+ *           example: Nintendo Switch
  *         genre:
  *           type: string
  *           enum: [Action, Adventure, RPG, Strategy, Sports, Racing, Puzzle]
  *           description: The game's genre
+ *           example: Adventure
  *         stock:
  *           type: integer
  *           minimum: 0
  *           description: Available stock quantity
+ *           example: 50
  *         coverImage:
  *           type: string
  *           format: binary
  *           description: The game's cover image
+ *     GameResponse:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: string
+ *           example: success
+ *         data:
+ *           type: object
+ *           properties:
+ *             game:
+ *               $ref: '#/components/schemas/Game'
+ *     GamesListResponse:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: string
+ *           example: success
+ *         data:
+ *           type: object
+ *           properties:
+ *             games:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Game'
+ *             page:
+ *               type: integer
+ *               example: 1
+ *             pages:
+ *               type: integer
+ *               example: 5
+ *             total:
+ *               type: integer
+ *               example: 50
  */
 
 //validation
@@ -74,6 +113,7 @@ const gameValidation = [
  * /games:
  *   get:
  *     summary: Get all games
+ *     description: Retrieve a paginated list of games with optional filtering
  *     tags: [Games]
  *     parameters:
  *       - in: query
@@ -111,23 +151,13 @@ const gameValidation = [
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     games:
- *                       type: array
- *                       items:
- *                         $ref: '#/components/schemas/Game'
- *                     page:
- *                       type: integer
- *                     pages:
- *                       type: integer
- *                     total:
- *                       type: integer
+ *               $ref: '#/components/schemas/GamesListResponse'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.get('/', getGames);
 
@@ -136,6 +166,7 @@ router.get('/', getGames);
  * /games/{id}:
  *   get:
  *     summary: Get a game by ID
+ *     description: Retrieve detailed information about a specific game
  *     tags: [Games]
  *     parameters:
  *       - in: path
@@ -150,17 +181,19 @@ router.get('/', getGames);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     game:
- *                       $ref: '#/components/schemas/Game'
+ *               $ref: '#/components/schemas/GameResponse'
  *       404:
  *         description: Game not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/NotFoundError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.get('/:id', getGame);
 
@@ -169,6 +202,7 @@ router.get('/:id', getGame);
  * /games:
  *   post:
  *     summary: Create a new game
+ *     description: Add a new game to the marketplace (Admin only)
  *     tags: [Games]
  *     security:
  *       - bearerAuth: []
@@ -178,9 +212,35 @@ router.get('/:id', getGame);
  *         multipart/form-data:
  *           schema:
  *             $ref: '#/components/schemas/Game'
+ *           example:
+ *             title: "The Legend of Zelda: Breath of the Wild"
+ *             description: An action-adventure game set in a vast open world
+ *             price: 59.99
+ *             platform: Nintendo Switch
+ *             genre: Adventure
+ *             stock: 50
+ *             coverImage: (binary)
  *     responses:
  *       201:
  *         description: Game created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GameResponse'
+ *       400:
+ *         description: Invalid input data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         description: Not admin
  *         content:
  *           application/json:
  *             schema:
@@ -188,17 +248,16 @@ router.get('/:id', getGame);
  *               properties:
  *                 status:
  *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     game:
- *                       $ref: '#/components/schemas/Game'
- *       401:
- *         description: Not authorized
- *       403:
- *         description: Not admin
- *       400:
- *         description: Invalid input data
+ *                   example: error
+ *                 message:
+ *                   type: string
+ *                   example: Not authorized as admin
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.post('/', protect, admin, upload.single('coverImage'), gameValidation, createGame);
 
@@ -207,6 +266,7 @@ router.post('/', protect, admin, upload.single('coverImage'), gameValidation, cr
  * /games/{id}:
  *   put:
  *     summary: Update a game
+ *     description: Modify an existing game's details (Admin only)
  *     tags: [Games]
  *     security:
  *       - bearerAuth: []
@@ -223,9 +283,35 @@ router.post('/', protect, admin, upload.single('coverImage'), gameValidation, cr
  *         multipart/form-data:
  *           schema:
  *             $ref: '#/components/schemas/Game'
+ *           example:
+ *             title: "The Legend of Zelda: Breath of the Wild"
+ *             description: Updated game description
+ *             price: 49.99
+ *             platform: Nintendo Switch
+ *             genre: Adventure
+ *             stock: 75
+ *             coverImage: (binary)
  *     responses:
  *       200:
  *         description: Game updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GameResponse'
+ *       400:
+ *         description: Invalid input data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         description: Not admin
  *         content:
  *           application/json:
  *             schema:
@@ -233,19 +319,22 @@ router.post('/', protect, admin, upload.single('coverImage'), gameValidation, cr
  *               properties:
  *                 status:
  *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     game:
- *                       $ref: '#/components/schemas/Game'
- *       401:
- *         description: Not authorized
- *       403:
- *         description: Not admin
+ *                   example: error
+ *                 message:
+ *                   type: string
+ *                   example: Not authorized as admin
  *       404:
  *         description: Game not found
- *       400:
- *         description: Invalid input data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/NotFoundError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.put('/:id', protect, admin, upload.single('coverImage'), gameValidation, updateGame);
 
@@ -254,6 +343,7 @@ router.put('/:id', protect, admin, upload.single('coverImage'), gameValidation, 
  * /games/{id}:
  *   delete:
  *     summary: Delete a game
+ *     description: Remove a game from the marketplace (Admin only)
  *     tags: [Games]
  *     security:
  *       - bearerAuth: []
@@ -267,12 +357,47 @@ router.put('/:id', protect, admin, upload.single('coverImage'), gameValidation, 
  *     responses:
  *       200:
  *         description: Game deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   type: null
  *       401:
  *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
  *       403:
  *         description: Not admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: error
+ *                 message:
+ *                   type: string
+ *                   example: Not authorized as admin
  *       404:
  *         description: Game not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/NotFoundError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.delete('/:id', protect, admin, deleteGame);
 

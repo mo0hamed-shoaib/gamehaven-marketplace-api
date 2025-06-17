@@ -24,36 +24,58 @@ const router = express.Router();
  *         gameId:
  *           type: string
  *           description: ID of the game to add to cart
+ *           example: 60d21b4667d0d8992e610c85
  *         quantity:
  *           type: integer
  *           minimum: 1
  *           description: Quantity of the game
+ *           example: 2
+ *     CartItemResponse:
+ *       type: object
+ *       properties:
+ *         game:
+ *           type: object
+ *           properties:
+ *             _id:
+ *               type: string
+ *               example: 60d21b4667d0d8992e610c85
+ *             title:
+ *               type: string
+ *               example: "The Legend of Zelda: Breath of the Wild"
+ *             price:
+ *               type: number
+ *               example: 59.99
+ *             coverImage:
+ *               type: string
+ *               example: https://example.com/images/zelda.jpg
+ *         quantity:
+ *           type: integer
+ *           example: 2
+ *         subtotal:
+ *           type: number
+ *           example: 119.98
  *     Cart:
  *       type: object
  *       properties:
  *         items:
  *           type: array
  *           items:
- *             type: object
- *             properties:
- *               game:
- *                 type: object
- *                 properties:
- *                   _id:
- *                     type: string
- *                   title:
- *                     type: string
- *                   price:
- *                     type: number
- *                   coverImage:
- *                     type: string
- *               quantity:
- *                 type: integer
- *               subtotal:
- *                 type: number
+ *             $ref: '#/components/schemas/CartItemResponse'
  *         total:
  *           type: number
  *           description: Total cart amount
+ *           example: 119.98
+ *     CartResponse:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: string
+ *           example: success
+ *         data:
+ *           type: object
+ *           properties:
+ *             cart:
+ *               $ref: '#/components/schemas/Cart'
  */
 
 // Validation middleware
@@ -70,6 +92,7 @@ router.use(protect);
  * /cart:
  *   get:
  *     summary: Get user's shopping cart
+ *     description: Retrieve the current user's shopping cart with all items
  *     tags: [Cart]
  *     security:
  *       - bearerAuth: []
@@ -79,17 +102,19 @@ router.use(protect);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     cart:
- *                       $ref: '#/components/schemas/Cart'
+ *               $ref: '#/components/schemas/CartResponse'
  *       401:
  *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.get('/', getCart);
 
@@ -98,6 +123,7 @@ router.get('/', getCart);
  * /cart:
  *   post:
  *     summary: Add item to cart
+ *     description: Add a new game to the user's shopping cart
  *     tags: [Cart]
  *     security:
  *       - bearerAuth: []
@@ -107,27 +133,40 @@ router.get('/', getCart);
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/CartItem'
+ *           example:
+ *             gameId: 60d21b4667d0d8992e610c85
+ *             quantity: 2
  *     responses:
  *       200:
  *         description: Item added to cart successfully
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     cart:
- *                       $ref: '#/components/schemas/Cart'
+ *               $ref: '#/components/schemas/CartResponse'
  *       400:
  *         description: Invalid input data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ValidationError'
  *       401:
  *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
  *       404:
  *         description: Game not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/NotFoundError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.post('/', cartItemValidation, addToCart);
 
@@ -136,6 +175,7 @@ router.post('/', cartItemValidation, addToCart);
  * /cart/{itemId}:
  *   put:
  *     summary: Update cart item quantity
+ *     description: Modify the quantity of an item in the shopping cart
  *     tags: [Cart]
  *     security:
  *       - bearerAuth: []
@@ -152,27 +192,40 @@ router.post('/', cartItemValidation, addToCart);
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/CartItem'
+ *           example:
+ *             gameId: 60d21b4667d0d8992e610c85
+ *             quantity: 3
  *     responses:
  *       200:
  *         description: Cart item updated successfully
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     cart:
- *                       $ref: '#/components/schemas/Cart'
+ *               $ref: '#/components/schemas/CartResponse'
  *       400:
  *         description: Invalid input data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ValidationError'
  *       401:
  *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
  *       404:
  *         description: Cart item not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/NotFoundError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.put('/:itemId', cartItemValidation, updateCartItem);
 
@@ -181,6 +234,7 @@ router.put('/:itemId', cartItemValidation, updateCartItem);
  * /cart/{itemId}:
  *   delete:
  *     summary: Remove item from cart
+ *     description: Remove a specific item from the shopping cart
  *     tags: [Cart]
  *     security:
  *       - bearerAuth: []
@@ -197,19 +251,25 @@ router.put('/:itemId', cartItemValidation, updateCartItem);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     cart:
- *                       $ref: '#/components/schemas/Cart'
+ *               $ref: '#/components/schemas/CartResponse'
  *       401:
  *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
  *       404:
  *         description: Cart item not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/NotFoundError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.delete('/:itemId', removeFromCart);
 
@@ -218,6 +278,7 @@ router.delete('/:itemId', removeFromCart);
  * /cart:
  *   delete:
  *     summary: Clear entire cart
+ *     description: Remove all items from the shopping cart
  *     tags: [Cart]
  *     security:
  *       - bearerAuth: []
@@ -227,17 +288,19 @@ router.delete('/:itemId', removeFromCart);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     cart:
- *                       $ref: '#/components/schemas/Cart'
+ *               $ref: '#/components/schemas/CartResponse'
  *       401:
  *         description: Not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/UnauthorizedError'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/ServerError'
  */
 router.delete('/', clearCart);
 

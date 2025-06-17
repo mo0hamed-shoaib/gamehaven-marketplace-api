@@ -1,0 +1,1554 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "GameHaven API",
+    "version": "1.0.0",
+    "description": "GameHaven - A digital video game marketplace REST API"
+  },
+  "servers": [
+    {
+      "url": "https://gamehaven-marketplace-api.vercel.app",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/cart": {
+      "get": {
+        "summary": "Get user's shopping cart",
+        "description": "Retrieve the current user's shopping cart with all items",
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cart details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add item to cart",
+        "description": "Add a new game to the user's shopping cart",
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CartItem"
+              },
+              "example": {
+                "gameId": "60d21b4667d0d8992e610c85",
+                "quantity": 2
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Item added to cart successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Game not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Clear entire cart",
+        "description": "Remove all items from the shopping cart",
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cart cleared successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/{itemId}": {
+      "put": {
+        "summary": "Update cart item quantity",
+        "description": "Modify the quantity of an item in the shopping cart",
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "itemId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Cart item ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CartItem"
+              },
+              "example": {
+                "gameId": "60d21b4667d0d8992e610c85",
+                "quantity": 3
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cart item updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove item from cart",
+        "description": "Remove a specific item from the shopping cart",
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "itemId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Cart item ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item removed from cart successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games": {
+      "get": {
+        "summary": "Get all games",
+        "description": "Retrieve a paginated list of games with optional filtering",
+        "tags": [
+          "Games"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of items per page"
+          },
+          {
+            "in": "query",
+            "name": "genre",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Action",
+                "Adventure",
+                "RPG",
+                "Strategy",
+                "Sports",
+                "Racing",
+                "Puzzle"
+              ]
+            },
+            "description": "Filter by genre"
+          },
+          {
+            "in": "query",
+            "name": "platform",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PC",
+                "PlayStation",
+                "Xbox",
+                "Nintendo Switch"
+              ]
+            },
+            "description": "Filter by platform"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search in game titles"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of games",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GamesListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new game",
+        "description": "Add a new game to the marketplace (Admin only)",
+        "tags": [
+          "Games"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Game"
+              },
+              "example": {
+                "title": "The Legend of Zelda: Breath of the Wild",
+                "description": "An action-adventure game set in a vast open world",
+                "price": 59.99,
+                "platform": "Nintendo Switch",
+                "genre": "Adventure",
+                "stock": 50,
+                "coverImage": "(binary)"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Game created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized as admin"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/{id}": {
+      "get": {
+        "summary": "Get a game by ID",
+        "description": "Retrieve detailed information about a specific game",
+        "tags": [
+          "Games"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Game ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Game details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Game not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a game",
+        "description": "Modify an existing game's details (Admin only)",
+        "tags": [
+          "Games"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Game ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Game"
+              },
+              "example": {
+                "title": "The Legend of Zelda: Breath of the Wild",
+                "description": "Updated game description",
+                "price": 49.99,
+                "platform": "Nintendo Switch",
+                "genre": "Adventure",
+                "stock": 75,
+                "coverImage": "(binary)"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Game updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized as admin"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Game not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a game",
+        "description": "Remove a game from the marketplace (Admin only)",
+        "tags": [
+          "Games"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Game ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Game deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized as admin"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Game not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "summary": "Get all orders for the authenticated user",
+        "description": "Retrieve a paginated list of orders for the currently logged-in user",
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of items per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrdersListResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new order",
+        "description": "Create a new order with items from the user's cart",
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "items"
+                ],
+                "properties": {
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/OrderItem"
+                    }
+                  }
+                }
+              },
+              "example": {
+                "items": [
+                  {
+                    "game": "60d21b4667d0d8992e610c85",
+                    "quantity": 2
+                  },
+                  {
+                    "game": "60d21b4667d0d8992e610c86",
+                    "quantity": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "summary": "Get a specific order by ID",
+        "description": "Retrieve detailed information about a specific order",
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Order ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Order not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{id}/status": {
+      "put": {
+        "summary": "Update order status (Admin only)",
+        "description": "Change the status of an existing order (pending, completed, or cancelled)",
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Order ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "status"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "completed",
+                      "cancelled"
+                    ],
+                    "description": "New order status"
+                  }
+                }
+              },
+              "example": {
+                "status": "completed"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Order status updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized as admin"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Order not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The user's name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "The user's email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "The user's password"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "admin"
+            ],
+            "description": "The user's role"
+          }
+        }
+      },
+      "CartItem": {
+        "type": "object",
+        "required": [
+          "gameId",
+          "quantity"
+        ],
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "description": "ID of the game to add to cart",
+            "example": "60d21b4667d0d8992e610c85"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Quantity of the game",
+            "example": 2
+          }
+        }
+      },
+      "CartItemResponse": {
+        "type": "object",
+        "properties": {
+          "game": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "60d21b4667d0d8992e610c85"
+              },
+              "title": {
+                "type": "string",
+                "example": "The Legend of Zelda: Breath of the Wild"
+              },
+              "price": {
+                "type": "number",
+                "example": 59.99
+              },
+              "coverImage": {
+                "type": "string",
+                "example": "https://example.com/images/zelda.jpg"
+              }
+            }
+          },
+          "quantity": {
+            "type": "integer",
+            "example": 2
+          },
+          "subtotal": {
+            "type": "number",
+            "example": 119.98
+          }
+        }
+      },
+      "Cart": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartItemResponse"
+            }
+          },
+          "total": {
+            "type": "number",
+            "description": "Total cart amount",
+            "example": 119.98
+          }
+        }
+      },
+      "CartResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "cart": {
+                "$ref": "#/components/schemas/Cart"
+              }
+            }
+          }
+        }
+      },
+      "Game": {
+        "type": "object",
+        "required": [
+          "title",
+          "description",
+          "price",
+          "platform",
+          "genre",
+          "stock"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The game's title",
+            "example": "The Legend of Zelda: Breath of the Wild"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the game",
+            "example": "An action-adventure game set in a vast open world where you can explore, fight, and solve puzzles."
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "minimum": 0,
+            "description": "The game's price in USD",
+            "example": 59.99
+          },
+          "platform": {
+            "type": "string",
+            "enum": [
+              "PC",
+              "PlayStation",
+              "Xbox",
+              "Nintendo Switch"
+            ],
+            "description": "The game's platform",
+            "example": "Nintendo Switch"
+          },
+          "genre": {
+            "type": "string",
+            "enum": [
+              "Action",
+              "Adventure",
+              "RPG",
+              "Strategy",
+              "Sports",
+              "Racing",
+              "Puzzle"
+            ],
+            "description": "The game's genre",
+            "example": "Adventure"
+          },
+          "stock": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Available stock quantity",
+            "example": 50
+          },
+          "coverImage": {
+            "type": "string",
+            "format": "binary",
+            "description": "The game's cover image"
+          }
+        }
+      },
+      "GameResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "game": {
+                "$ref": "#/components/schemas/Game"
+              }
+            }
+          }
+        }
+      },
+      "GamesListResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "games": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              },
+              "page": {
+                "type": "integer",
+                "example": 1
+              },
+              "pages": {
+                "type": "integer",
+                "example": 5
+              },
+              "total": {
+                "type": "integer",
+                "example": 50
+              }
+            }
+          }
+        }
+      },
+      "OrderItem": {
+        "type": "object",
+        "required": [
+          "game",
+          "quantity"
+        ],
+        "properties": {
+          "game": {
+            "type": "string",
+            "description": "Game ID",
+            "example": "60d21b4667d0d8992e610c85"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Quantity of the game",
+            "example": 2
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItem"
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "completed",
+              "cancelled"
+            ],
+            "default": "pending",
+            "description": "Order status",
+            "example": "pending"
+          },
+          "totalAmount": {
+            "type": "number",
+            "description": "Total order amount",
+            "example": 119.98
+          },
+          "user": {
+            "type": "string",
+            "description": "User ID who placed the order",
+            "example": "60d21b4667d0d8992e610c86"
+          }
+        }
+      },
+      "OrderResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "order": {
+                "$ref": "#/components/schemas/Order"
+              }
+            }
+          }
+        }
+      },
+      "OrdersListResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "orders": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              },
+              "page": {
+                "type": "integer",
+                "example": 1
+              },
+              "pages": {
+                "type": "integer",
+                "example": 5
+              },
+              "total": {
+                "type": "integer",
+                "example": 50
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}
